@@ -82,6 +82,11 @@ jobs:
       contents: write
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
