@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langchain-backend-microsandbox"
+version = "0.1.0"
+description = "Microsandbox backend integration for DeepAgents and LangChain."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["deepagents", "langchain", "microsandbox", "sandbox", "microvm"]
+authors = [{ name = "dod-ia"}]
+requires-python = ">=3.12"
+dependencies = [
+    "deepagents>=0.7.35,<0.8.0",
+    "microsandbox>=0.7.14,<0.8.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/dod-ia/langchain-backend-microsandbox"
+Repository = "https://github.com/dod-ia/langchain-backend-microsandbox"
+Issues = "https://github.com/dod-ia/langchain-backend-microsandbox/issues"
+Changelog = "https://github.com/dod-ia/langchain-backend-microsandbox/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/langchain_backend_microsandbox"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/",
+    "README.md",
+    "LICENSE",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.4.1.post1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.4",
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812",  # Messes with the formatter
+    "ISC001",  # Messes with the formatter
+    "ASYNC109", # Timeout is delegated to microVM framework
+    "TRY003"
+]
+extend-safe-fixes = ["PLR6201"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+ignore-var-parameters = true
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff]
+extend-exclude = ["tests"]
