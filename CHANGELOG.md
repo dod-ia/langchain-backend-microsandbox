@@ -1,4 +1,9 @@
-## 0.1.0 - 2026-08-23
+## 0.1.1 - 2026-11-13
+
+- Fix minor errors in project ecosystem. 
+- Code is unchanged from 0.1.0
+
+## 0.1.0 - 2026-11-13
 
 - Add `MicrosandboxSandbox`, a current Deep Agents `BaseSandbox` adapter for
   existing `microsandbox.Sandbox` instances.

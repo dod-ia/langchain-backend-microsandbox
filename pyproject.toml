@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "langchain-backend-microsandbox"
-version = "0.1.0"
+version = "0.1.1"
 description = "Microsandbox backend integration for DeepAgents and LangChain."
 readme = "README.md"
 license = "MIT"
@@ -21,7 +21,7 @@ dependencies = [
 Homepage = "https://github.com/dod-ia/langchain-backend-microsandbox"
 Repository = "https://github.com/dod-ia/langchain-backend-microsandbox"
 Issues = "https://github.com/dod-ia/langchain-backend-microsandbox/issues"
-Changelog = "https://github.com/dod-ia/langchain-backend-microsandbox/CHANGELOG.md"
+Changelog = "https://github.com/dod-ia/langchain-backend-microsandbox/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/langchain_backend_microsandbox"]
@@ -31,6 +31,7 @@ include = [
     "src/",
     "README.md",
     "LICENSE",
+    "CHANGELOG.md",
 ]
 
 [dependency-groups]
