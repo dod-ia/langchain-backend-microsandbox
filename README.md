@@ -51,22 +51,40 @@ This approach avoids reimplementing filesystem behavior and helps maintain consi
 
 ### BaseSandbox behavior
 
-todo
+#### Grep directory exclusions
 
-## Inherited BaseSandbox Behavior
+Directories listed in `grep_exclude_dirs` are excluded from recursive searches, regardless of their depth in the directory tree.
 
-MicrosandboxSandbox inherits the default filesystem operations from LangChain Deep Agents' BaseSandbox, preserving the following behaviors:
+However, explicitly specifying an excluded directory as the search root overrides this exclusion.
 
-* Absolute paths: read() requires absolute paths.
-  * `file_path - str - Absolute path to the file to read.`
-  * Source: https://reference.langchain.com/python/deepagents/backends/sandbox/BaseSandbox/read
-* Grep exclusions: Directories configured in grep_exclude_dirs are excluded from recursive searches at any depth. However, explicitly targeting an excluded directory still allows searching its contents.
-  * `A search rooted at one of these directories still searches it.`
-  * Source: https://reference.langchain.com/python/deepagents/backends/sandbox/BaseSandbox/grep_exclude_dirs
-* **Timeout handling**: A timeout of 0 disables command execution timeouts. Negative timeout values are rejected.
-  * `A value of 0 may disable timeouts on backends that support no-timeout execution.`
-  * Source: https://reference.langchain.com/python/deepagents/backends/protocol/SandboxBackendProtocol/execute
-* **Python in the VM**: The environment must have a Python interpreter
+In other words:
+- Searching from a parent directory skips excluded directories.
+- Explicitly targeting an excluded directory still searches its contents.
+
+This allows common directories such as `.git` to be excluded from general searches without preventing developers or agents from inspecting them when needed.
+
+Reference: [BaseSandbox.grep_exclude_dirs](https://reference.langchain.com/python/deepagents/backends/sandbox/BaseSandbox/grep_exclude_dirs)
+
+#### Command execution timeouts
+
+Timeout behavior follows the `SandboxBackendProtocol` conventions:
+
+- `None` uses the default timeout configured when creating the adapter.
+- `0` disables the execution timeout.
+- Negative values are rejected with a `ValueError`.
+- When a command exceeds its configured timeout, the backend returns exit code `124`.
+
+Reference: [SandboxBackendProtocol.execute](https://reference.langchain.com/python/deepagents/backends/protocol/SandboxBackendProtocol/execute)
+
+#### Python runtime requirement
+
+The Microsandbox VM must have Python 3 installed and available in `PATH`.
+
+This is a requirement of the inherited `BaseSandbox` filesystem operations, which rely on Python scripts executed inside the sandbox.
+
+Having Python installed on the host machine is not sufficient: the interpreter must be available inside the Microsandbox VM.
+
+Make sure your sandbox image includes a compatible Python installation before initializing the backend.
   
 ## Requirements
 
