@@ -102,7 +102,13 @@ On **debian/ubuntu system**, you can install KVM  by installing:
 
 `sudo apt install qemu-system libvirt-daemon-system`
 
-## Installation from sources
+## Installation 
+
+### From Pypi
+
+`pip install langchain-backend-microsandbox`
+
+### From sources
 
 Clone the repository and install the package:
 
